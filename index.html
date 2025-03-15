@@ -58,22 +58,6 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(1080deg); }
         }
-        .fake-virus {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            color: red;
-            font-size: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 1s;
-        }
     </style>
 </head>
 <body>
@@ -81,7 +65,6 @@
     <p>Press the button. If you dare.</p>
     <button class="button" onclick="increment()">CLICK FOR DESTRUCTION</button>
     <div id="counter">Clicks: 0</div>
-    <div id="virus-warning" class="fake-virus">⚠️ YOUR DEVICE HAS BEEN INFECTED WITH A VIRUS! ⚠️</div>
     <script>
         let count = 0;
         let milestone = 5;
@@ -108,10 +91,6 @@
                 alert(messages[Math.floor(Math.random() * messages.length)].replace("{count}", count));
                 milestone += 5 + (milestone / 2);
             }
-            
-            if (Math.random() < 0.05) {
-                triggerFakeVirus();
-            }
         }
         
         function createParticle() {
@@ -128,9 +107,18 @@
             }
         }
         
-        function triggerFakeVirus() {
-            document.getElementById("virus-warning").style.opacity = "1";
-            setTimeout(() => document.getElementById("virus-warning").style.opacity = "0", 3000);
+        function createChaos() {
+            for (let i = 0; i < 5; i++) {
+                const chaos = document.createElement("div");
+                chaos.className = "chaos";
+                chaos.innerText = ["🤯", "💀", "🚀", "⚡", "🎉", "🔥", "👽", "🔮"][Math.floor(Math.random() * 8)];
+                document.body.appendChild(chaos);
+                
+                chaos.style.left = Math.random() * window.innerWidth + "px";
+                chaos.style.top = Math.random() * window.innerHeight + "px";
+                
+                setTimeout(() => chaos.remove(), 300);
+            }
         }
     </script>
 </body>
