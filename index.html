@@ -11,6 +11,7 @@
             background: linear-gradient(135deg, #ff00ff, #00ffff);
             color: white;
             overflow: hidden;
+            transition: background 0.2s;
         }
         .button {
             padding: 20px 40px;
@@ -20,19 +21,22 @@
             color: black;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
+            transition: transform 0.1s, background 0.1s;
+            position: relative;
         }
         .button:active {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(5deg);
             background: orange;
         }
         .button.animate {
-            animation: bounce 0.3s;
+            animation: shake 0.1s infinite;
         }
-        @keyframes bounce {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            50% { transform: translateX(5px) rotate(2deg); }
+            75% { transform: translateX(-5px) rotate(-2deg); }
+            100% { transform: translateX(0); }
         }
         #counter {
             font-size: 40px;
@@ -40,29 +44,38 @@
         }
         .particle {
             position: absolute;
-            font-size: 20px;
-            animation: float 2s linear;
+            font-size: 30px;
+            animation: float 1.5s linear;
         }
         @keyframes float {
             0% { opacity: 1; transform: translateY(0px) scale(1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+            100% { opacity: 0; transform: translateY(-150px) scale(2); }
+        }
+        .chaos {
+            position: absolute;
+            font-size: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <h1>Welcome to The Infinite Button</h1>
-    <p>Click the button for absolutely no reason, but feel accomplished.</p>
+    <p>Click the button for pure chaos.</p>
     <button class="button" onclick="increment()">Click Me!</button>
     <div id="counter">Clicks: 0</div>
     <script>
         let count = 0;
         let milestone = 10;
         const messages = [
-            "Wow! You clicked {count} times! Do you feel powerful?",
-            "Incredible! {count} clicks! Are you unstoppable?",
-            "You're on fire! {count} clicks and counting!",
-            "Legendary clicking skills! {count} clicks!",
-            "You might be the greatest clicker of all time! {count} clicks!"
+            "Wow! {count} clicks! You're insane!",
+            "Unstoppable! {count} clicks!",
+            "You're a clicking god! {count} clicks!",
+            "MASSIVE W! {count} clicks!",
+            "Reality is breaking! {count} clicks!"
         ];
         
         function increment() {
@@ -71,10 +84,12 @@
             
             const button = document.querySelector(".button");
             button.classList.add("animate");
-            setTimeout(() => button.classList.remove("animate"), 300);
+            setTimeout(() => button.classList.remove("animate"), 100);
             
             createParticle();
+            createChaos();
             changeBackground();
+            playSound();
             
             if (count >= milestone) {
                 alert(messages[Math.floor(Math.random() * messages.length)].replace("{count}", count));
@@ -85,17 +100,37 @@
         function createParticle() {
             const particle = document.createElement("div");
             particle.className = "particle";
-            particle.innerText = "✨";
+            particle.innerText = ["✨", "🔥", "💥", "💨", "💎"][Math.floor(Math.random() * 5)];
             document.body.appendChild(particle);
             
             particle.style.left = Math.random() * window.innerWidth + "px";
             particle.style.top = Math.random() * window.innerHeight + "px";
             
-            setTimeout(() => particle.remove(), 2000);
+            setTimeout(() => particle.remove(), 1500);
+        }
+        
+        function createChaos() {
+            if (Math.random() > 0.8) {
+                const chaos = document.createElement("div");
+                chaos.className = "chaos";
+                chaos.innerText = ["🤯", "💀", "🚀", "⚡", "🎉"][Math.floor(Math.random() * 5)];
+                document.body.appendChild(chaos);
+                
+                chaos.style.left = Math.random() * window.innerWidth + "px";
+                chaos.style.top = Math.random() * window.innerHeight + "px";
+                
+                setTimeout(() => chaos.remove(), 1000);
+            }
         }
         
         function changeBackground() {
             document.body.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        }
+        
+        function playSound() {
+            const audio = new Audio(["https://www.myinstants.com/media/sounds/vine-boom.mp3", "https://www.myinstants.com/media/sounds/oof.mp3", "https://www.myinstants.com/media/sounds/metal-pipe.mp3"][Math.floor(Math.random() * 3)]);
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
         }
     </script>
 </body>
