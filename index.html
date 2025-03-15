@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #ff00ff, #00ffff);
             color: white;
+            overflow: hidden;
         }
         .button {
             padding: 20px 40px;
@@ -25,9 +26,26 @@
             transform: scale(1.1);
             background: orange;
         }
+        .button.animate {
+            animation: bounce 0.3s;
+        }
+        @keyframes bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
         #counter {
             font-size: 40px;
             margin-top: 20px;
+        }
+        .particle {
+            position: absolute;
+            font-size: 20px;
+            animation: float 2s linear;
+        }
+        @keyframes float {
+            0% { opacity: 1; transform: translateY(0px) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
         }
     </style>
 </head>
@@ -38,12 +56,46 @@
     <div id="counter">Clicks: 0</div>
     <script>
         let count = 0;
+        let milestone = 10;
+        const messages = [
+            "Wow! You clicked {count} times! Do you feel powerful?",
+            "Incredible! {count} clicks! Are you unstoppable?",
+            "You're on fire! {count} clicks and counting!",
+            "Legendary clicking skills! {count} clicks!",
+            "You might be the greatest clicker of all time! {count} clicks!"
+        ];
+        
         function increment() {
             count++;
             document.getElementById("counter").innerText = "Clicks: " + count;
-            if (count % 10 === 0) {
-                alert("Wow! You clicked " + count + " times! Do you feel powerful?");
+            
+            const button = document.querySelector(".button");
+            button.classList.add("animate");
+            setTimeout(() => button.classList.remove("animate"), 300);
+            
+            createParticle();
+            changeBackground();
+            
+            if (count >= milestone) {
+                alert(messages[Math.floor(Math.random() * messages.length)].replace("{count}", count));
+                milestone += 5 + (milestone / 2); // Increase the next milestone dynamically
             }
+        }
+        
+        function createParticle() {
+            const particle = document.createElement("div");
+            particle.className = "particle";
+            particle.innerText = "✨";
+            document.body.appendChild(particle);
+            
+            particle.style.left = Math.random() * window.innerWidth + "px";
+            particle.style.top = Math.random() * window.innerHeight + "px";
+            
+            setTimeout(() => particle.remove(), 2000);
+        }
+        
+        function changeBackground() {
+            document.body.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
         }
     </script>
 </body>
