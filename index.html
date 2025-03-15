@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Infinite Button</title>
+    <title>THE ULTIMATE CHAOS BUTTON</title>
     <style>
         body {
             text-align: center;
@@ -11,126 +11,143 @@
             background: linear-gradient(135deg, #ff00ff, #00ffff);
             color: white;
             overflow: hidden;
-            transition: background 0.2s;
+            transition: background 0.05s;
         }
         .button {
-            padding: 20px 40px;
-            font-size: 24px;
+            padding: 30px 60px;
+            font-size: 32px;
             border: none;
             background: gold;
             color: black;
-            border-radius: 10px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.1s, background 0.1s;
+            transition: transform 0.02s, background 0.02s;
             position: relative;
+            animation: shake 0.2s infinite alternate;
         }
         .button:active {
-            transform: scale(1.2) rotate(5deg);
-            background: orange;
-        }
-        .button.animate {
-            animation: shake 0.1s infinite;
+            transform: scale(2) rotate(20deg);
+            background: red;
         }
         @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px) rotate(-2deg); }
-            50% { transform: translateX(5px) rotate(2deg); }
-            75% { transform: translateX(-5px) rotate(-2deg); }
-            100% { transform: translateX(0); }
+            0% { transform: translateX(-5px) rotate(-2deg); }
+            100% { transform: translateX(5px) rotate(2deg); }
         }
         #counter {
-            font-size: 40px;
+            font-size: 60px;
             margin-top: 20px;
+            animation: glitch 0.2s infinite alternate;
         }
-        .particle {
+        @keyframes glitch {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); color: yellow; }
+        }
+        .particle, .chaos {
             position: absolute;
-            font-size: 30px;
-            animation: float 1.5s linear;
+            font-size: 70px;
+            animation: float 0.5s linear;
         }
         @keyframes float {
             0% { opacity: 1; transform: translateY(0px) scale(1); }
-            100% { opacity: 0; transform: translateY(-150px) scale(2); }
+            100% { opacity: 0; transform: translateY(-300px) scale(4); }
         }
         .chaos {
-            position: absolute;
-            font-size: 50px;
-            animation: spin 1s linear infinite;
+            animation: spin 0.2s linear infinite;
         }
         @keyframes spin {
             from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            to { transform: rotate(1080deg); }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to The Infinite Button</h1>
-    <p>Click the button for pure chaos.</p>
-    <button class="button" onclick="increment()">Click Me!</button>
+    <h1>CHAOS MODE ENGAGED</h1>
+    <p>Press the button. If you dare.</p>
+    <button class="button" onclick="increment()">CLICK FOR DESTRUCTION</button>
     <div id="counter">Clicks: 0</div>
     <script>
         let count = 0;
-        let milestone = 10;
+        let milestone = 5;
         const messages = [
-            "Wow! {count} clicks! You're insane!",
-            "Unstoppable! {count} clicks!",
-            "You're a clicking god! {count} clicks!",
-            "MASSIVE W! {count} clicks!",
-            "Reality is breaking! {count} clicks!"
+            "{count} CLICKS! THE WORLD IS TEARING APART!",
+            "{count} CLICKS! STOP OR FACE THE CONSEQUENCES!",
+            "{count} CLICKS! CHAOS REIGNS SUPREME!",
+            "{count} CLICKS! WE CAN'T GO BACK NOW!",
+            "{count} CLICKS! REALITY COLLAPSES!"
         ];
         
         function increment() {
             count++;
             document.getElementById("counter").innerText = "Clicks: " + count;
             
-            const button = document.querySelector(".button");
-            button.classList.add("animate");
-            setTimeout(() => button.classList.remove("animate"), 100);
-            
             createParticle();
             createChaos();
             changeBackground();
             playSound();
+            shakeScreen();
+            distortText();
             
             if (count >= milestone) {
                 alert(messages[Math.floor(Math.random() * messages.length)].replace("{count}", count));
-                milestone += 5 + (milestone / 2); // Increase the next milestone dynamically
+                milestone += 5 + (milestone / 2);
             }
         }
         
         function createParticle() {
-            const particle = document.createElement("div");
-            particle.className = "particle";
-            particle.innerText = ["✨", "🔥", "💥", "💨", "💎"][Math.floor(Math.random() * 5)];
-            document.body.appendChild(particle);
-            
-            particle.style.left = Math.random() * window.innerWidth + "px";
-            particle.style.top = Math.random() * window.innerHeight + "px";
-            
-            setTimeout(() => particle.remove(), 1500);
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.innerText = ["💥", "🔥", "⚡", "💀", "👽", "🎉", "💣", "🌪️"][Math.floor(Math.random() * 8)];
+                document.body.appendChild(particle);
+                
+                particle.style.left = Math.random() * window.innerWidth + "px";
+                particle.style.top = Math.random() * window.innerHeight + "px";
+                
+                setTimeout(() => particle.remove(), 500);
+            }
         }
         
         function createChaos() {
-            if (Math.random() > 0.8) {
+            for (let i = 0; i < 5; i++) {
                 const chaos = document.createElement("div");
                 chaos.className = "chaos";
-                chaos.innerText = ["🤯", "💀", "🚀", "⚡", "🎉"][Math.floor(Math.random() * 5)];
+                chaos.innerText = ["🤯", "💀", "🚀", "⚡", "🎉", "🔥", "👽", "🔮"][Math.floor(Math.random() * 8)];
                 document.body.appendChild(chaos);
                 
                 chaos.style.left = Math.random() * window.innerWidth + "px";
                 chaos.style.top = Math.random() * window.innerHeight + "px";
                 
-                setTimeout(() => chaos.remove(), 1000);
+                setTimeout(() => chaos.remove(), 300);
             }
         }
         
         function changeBackground() {
-            document.body.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            document.body.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
         }
         
         function playSound() {
-            const audio = new Audio(["https://www.myinstants.com/media/sounds/vine-boom.mp3", "https://www.myinstants.com/media/sounds/oof.mp3", "https://www.myinstants.com/media/sounds/metal-pipe.mp3"][Math.floor(Math.random() * 3)]);
-            audio.volume = 0.5;
+            const audio = new Audio([
+                "https://www.myinstants.com/media/sounds/vine-boom.mp3", 
+                "https://www.myinstants.com/media/sounds/oof.mp3", 
+                "https://www.myinstants.com/media/sounds/metal-pipe.mp3",
+                "https://www.myinstants.com/media/sounds/minecraft-villager-hmm.mp3",
+                "https://www.myinstants.com/media/sounds/wilhelm-scream.mp3",
+                "https://www.myinstants.com/media/sounds/roblox-death.mp3"
+            ][Math.floor(Math.random() * 6)]);
+            audio.volume = 1.0;
             audio.play().catch(() => {});
+        }
+        
+        function shakeScreen() {
+            document.body.style.transform = "translateX(20px) rotate(10deg)";
+            setTimeout(() => document.body.style.transform = "translateX(-20px) rotate(-10deg)", 50);
+            setTimeout(() => document.body.style.transform = "translateX(0) rotate(0)", 100);
+        }
+        
+        function distortText() {
+            const text = document.getElementById("counter");
+            text.style.fontSize = Math.random() * 100 + 30 + "px";
+            text.style.color = ["red", "yellow", "cyan", "magenta", "lime"][Math.floor(Math.random() * 5)];
         }
     </script>
 </body>
